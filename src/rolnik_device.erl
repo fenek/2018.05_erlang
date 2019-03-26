@@ -13,7 +13,13 @@
 
 -spec device_id_onewire() -> [binary()].
 device_id_onewire() ->
-    grisp_onewire:transaction(fun() -> grisp_onewire:search() end).
+    try_onewire(grisp_onewire:transaction(fun() -> grisp_onewire:search() end)).
+
+try_onewire(nothing_present) ->
+    timer:sleep(500),
+    try_onewire(grisp_onewire:transaction(fun() -> grisp_onewire:search() end));
+try_onewire([ID]) ->
+    [ID].
 
 -spec read_temperature_onewire(ID :: binary()) -> float().
 read_temperature_onewire(ID) ->
