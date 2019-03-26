@@ -13,6 +13,7 @@ init(Req0, State) ->
     Headers = #{<<"content-type">> => <<"text/json">>,
                 <<"access-control-allow-origin">> => <<"*">>},
     Req = cowboy_req:reply(200, Headers,
+                           %% TODO: return actual data
                            %hardcoded_development_stub(),
                            jsone_stub(),
                            Req0),
